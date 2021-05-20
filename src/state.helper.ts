@@ -10,6 +10,7 @@ export function stateSerializer(state) {
   return {
     code: state.id,
     uf: state.sigla,
-    nome: state.nome
+    nome: state.nome,
+    ...(state.populacao && {populacao: state.populacao})
   }
 }
