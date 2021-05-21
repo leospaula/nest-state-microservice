@@ -5,24 +5,20 @@ import {
   Ctx,
   NatsContext,
   ClientProxy, 
-  Client, 
-  Transport
+  Client
 } from '@nestjs/microservices';
 import { stateSerializeCollection, stateSerializer } from './state.helper';
 import { StateService } from './state.service';
 import { lastValueFrom } from 'rxjs';
+import { natsConfig } from './nats.config';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
 export class StateController {
   constructor(private readonly stateService: StateService) {}
 
-  @Client({
-    transport: Transport.NATS,
-    options: {
-      url: 'nats://localhost:4222',
-    },
-  })
+  @Client(natsConfig)
+
   client: ClientProxy;
 
   @MessagePattern('get-states')
